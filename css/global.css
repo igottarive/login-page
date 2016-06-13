@@ -1,0 +1,248 @@
+/* General Stylings */
+* { 
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #EEE;
+  color: #5D5D5D;
+}
+
+p { 
+  padding: 0 0 20px 0;
+  line-height: 1.7em;
+}
+
+.left {
+  float: left;
+  width: auto;
+  margin-right: 10px;
+}
+
+.right {
+  float: right; 
+  width: auto;
+  margin-left: 10px;
+}
+
+.center {
+  display: block;
+  text-align: center;
+  margin: 20px auto;
+}
+
+
+/* Header Stylings */
+#logo {
+  padding: 10px 10px 30px 10%;
+}
+
+
+/* Menu stylings */
+#menubar {
+  height: 24px;
+  padding-right: 10%;
+}
+
+ul#menu {
+  float: right;
+  margin: 0;
+  padding: 0;
+}
+
+ul#menu li {
+  float: left;
+  padding: 0;
+  list-style: none;
+  margin: 5px 2px 0 0;
+}
+
+ul#menu li a { 
+  display: block; 
+  float: left; 
+  height: 20px;
+  padding: 6px 20px 5px 20px;
+  text-align: center;
+  color: #000;
+  text-decoration: none;
+  background: #E0E0E0;
+}
+
+ul#menu li.selected a, ul#menu li.selected a:hover {
+  background: #FFF;
+  color: #B60000;
+}
+
+ul#menu li a:hover {
+  color: #B60000;
+}
+
+
+/* Main stylings */
+#site_content {
+  width: 80%;
+  overflow: hidden;
+  margin: 0 auto 0 auto;
+  padding: 10px 20px 20px 20px;
+  background: #F6F6F0;
+  border: 15px solid #fff;
+} 
+
+#content {
+  text-align: left;
+  width: 100%;
+  padding: 0;
+}
+
+
+/* Footer Stylings */
+#footer {
+  margin-left: auto; 
+  margin-right: auto;
+  font-family: sans-serif;
+  font-size: 90%;
+  height: 28px;
+  padding: 20px 0 5px 0;
+  text-align: center; 
+  background: transparent;
+  color: #111;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+#footer a, #footer a:hover {
+  color: #111;
+  text-decoration: underline;
+}
+
+#footer a:hover {
+  text-decoration: none;
+}
+
+#footer p {
+  line-height: 22px;
+  padding: 0;
+}
+
+#footer a.selected {
+  text-decoration: none;
+  pointer-events: none;
+  cursor: default;
+}
+
+/* Form stylings */
+.user_form{
+  font: 95% Arial, Helvetica, sans-serif;
+  max-width: 400px;
+  margin: 10px auto;
+  padding: 16px;
+  background: #F7F7F7;
+}
+.user_form h1{
+  background: #F6F6F0;
+  padding: 20px 0;
+  font-size: 160%;
+  font-weight: 300;
+  text-align: center;
+  color: #999;
+  margin: -16px -16px 16px -16px;
+}
+.user_form input[type="text"],
+.user_form input[type="password"],
+.user_form input[type="checkbox"],
+.user_form input[type="date"],
+.user_form input[type="datetime"],
+.user_form input[type="email"],
+.user_form input[type="number"],
+.user_form input[type="search"],
+.user_form input[type="time"],
+.user_form input[type="url"],
+.user_form textarea,
+.user_form select 
+{
+  -webkit-transition: all 0.30s ease-in-out;
+  -moz-transition: all 0.30s ease-in-out;
+  -ms-transition: all 0.30s ease-in-out;
+  -o-transition: all 0.30s ease-in-out;
+  outline: none;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  width: 100%;
+  background: #fff;
+  margin-bottom: 4%;
+  border: 1px solid #ccc;
+  padding: 3%;
+  color: #555;
+  font: 95% Arial, Helvetica, sans-serif;
+}
+
+.user_form input[type="checkbox"] {
+  width: 10%;
+}
+
+.user_form input[type="text"]:focus,
+.user_form input[type="password"]:focus,
+.user_form input[type="checkbox"]:focus,
+.user_form input[type="date"]:focus,
+.user_form input[type="datetime"]:focus,
+.user_form input[type="email"]:focus,
+.user_form input[type="number"]:focus,
+.user_form input[type="search"]:focus,
+.user_form input[type="time"]:focus,
+.user_form input[type="url"]:focus,
+.user_form textarea:focus,
+.user_form select:focus
+{
+  box-shadow: 0 0 5px #F6F6F0;
+  padding: 3%;
+  border: 1px solid #F6F6F0;
+}
+
+.user_form input[type="submit"],
+.user_form input[type="button"]{
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  width: 100%;
+  padding: 3%;
+  background: #F6F6F0;
+  border-top-style: none;
+  border-right-style: none;
+  border-left-style: none;
+  color: #999;
+  font-size: 110%;
+}
+.user_form input[type="submit"]:hover,
+.user_form input[type="button"]:hover{
+  background: #d8d8d8;
+}
+
+
+/* Popup Stylings */
+#popup {
+  background-color:#FFFFFF;
+  border:1px solid #999999;
+  cursor:default;
+  display:none;
+  margin-top: 15px;
+  position:fixed;
+  text-align:left;
+  width:394px;
+  z-index:50;
+  padding: 25px 25px 20px;
+  top: 30px;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+#popup p, #popup {
+  border-bottom: 1px solid #EFEFEF;
+  margin: 8px 0;
+  padding-bottom: 8px;
+}
+
+#popup.open {
+  display: block;
+}
