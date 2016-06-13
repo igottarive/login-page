@@ -251,6 +251,7 @@ ul#menu li a:hover {
 /* Error Stylings */
 .error {
   color: red;
+  text-align: center;
 }
 
 
