@@ -1,10 +1,10 @@
 <div id="header">
   <div id="logo">
-    <h1><a href="index.php">l0g1c.us</a></h1>
-    <h2>Does it make sense?</h2>
-      <?php if (isset($_SESSION) && isset($_SESSION['username'])): ?>
+    <h1><a href="index.php">Best.site.inthe.world</a></h1>
+    <h2>You found the best</h2>
+      <?php if (isset($_SESSION) && isset($_SESSION['userName'])): ?>
         <div class="right">
-          <span class="login">Hello <?php echo $_SESSION['username']; ?></span>
+          <span class="login">Hello <?php echo $_SESSION['userName']; ?></span>
           <a href="/logout.php" class="">Logout</span>
         </div>
       <?php else: ?>

@@ -246,3 +246,19 @@ ul#menu li a:hover {
 #popup.open {
   display: block;
 }
+
+
+/* Error Stylings */
+.error {
+  color: red;
+}
+
+
+/* Login Page Stylings */
+.login_page #menubar {
+  display: none;
+}
+.login_page .right {
+  float: none;
+  text-align: center;
+}

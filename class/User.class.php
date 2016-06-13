@@ -8,10 +8,10 @@
 class User {
 
     /** 
-     *  Unique userId
+     *  Unique user Id
      *  @var int
      */
-    public $userId;
+    public $id;
 
     /** 
      *  Unique user Name
@@ -45,14 +45,14 @@ class User {
 
     /**
      *  Date the user was created 
-     *  In the format of YYYY-MM-DD HH:MM
+     *  In the format of YYYY-MM-DD HH:MM:SS
      *  @var string
      */
     private $created;
 
     /**
      *  Date the user last logged in 
-     *  In the format of YYYY-MM-DD HH:MM
+     *  In the format of YYYY-MM-DD HH:MM:SS
      *  @var string
      */
     private $lastLogin;
@@ -137,13 +137,11 @@ class User {
 
     /**
      *  Try to log the user in
-     *
-     *  Returns true on success or an error msg ifnil there are 0 or
-     *  more than 1 student in the result set.
+     *  Logs in a user or sets errors if there are problems
      */
     public function login() {
-        if (!empty($_POST['username']) && !empty($_POST['password'])) {
-            $this->username = $_POST['username'];
+        if (!empty($_POST['userName']) && !empty($_POST['password'])) {
+            $this->userName = $_POST['userName'];
             $this->password = md5($_POST['password']);
             $user = $this->verify_password();
             if ($user) {
@@ -153,13 +151,16 @@ class User {
                 $_SESSION['id'] = session_id();
                 $_SESSION['user_id'] = $this->id;
                 $_SESSION['email'] = $this->email;
-                $_SESSION['username'] = $this->username;
+                $_SESSION['userName'] = $this->userName;
                 $_SESSION['is_logged'] = true;
                 $this->is_logged = true;
 
+                //Update the lastLogin field
+                $this->addLoginLog();
+
                 // Set a cookie that expires in one week
                 if (isset($_POST['remember'])) {
-                    setcookie('username', $this->username, time() + 604800);
+                    setcookie('userName', $this->userName, time() + 604800);
                 }
 
                 // To avoid resending the form on refreshing
@@ -169,7 +170,7 @@ class User {
             } else {
                 $this->error[] = 'Wrong username/password combination.';
             }
-        } elseif (empty($_POST['username'])) {
+        } elseif (empty($_POST['userName'])) {
             $this->error[] = 'Username field was empty.';
         } elseif (empty($_POST['password'])) {
             $this->error[] = 'Password field was empty.';
@@ -177,14 +178,67 @@ class User {
     }
 
     /**
-     *  Check if username and password match
+     *  Register a new user
+     *  Inserts a new user or sets errors if there are problems
+     */
+	public function register() {
+		if (!empty($_POST['userName']) && !empty($_POST['password']) && !empty($_POST['passwordConfirm']
+            && !empty($_POST['email']) && !empty($_POST['lastName']) && !empty($_POST['firstName']) )) {
+			if ($_POST['password'] == $_POST['passwordConfirm']) {
+                $query = $this->db->prepare('INSERT INTO users 
+                    (userName, password, email, firstName, lastName, created)
+                    VALUES ( :userName, :password, :email, :firstName, :lastName, :created)');
+                $query->bindParam(':userName', $userName);
+                $query->bindParam(':password', $password);
+                $query->bindParam(':email', $email);
+                $query->bindParam(':firstName', $firstName);
+                $query->bindParam(':lastName', $lastName);
+                $query->bindParam(':created', $created);
+
+                $userName = $_POST['userName'];
+				$password = md5($_POST['password']);
+				$email = $_POST['email'];
+				$firstName = $_POST['firstName'];
+				$lastName = $_POST['lastName'];
+				$created = date("Y-m-d H:i:s");
+
+				if ($query->execute()) {
+					$this->msg[] = 'User created.';
+					$_SESSION['msg'] = $this->msg;
+					// To avoid resending the form on refreshing
+					header('Location: ' . $_SERVER['REQUEST_URI']);
+					exit();
+				} else {
+					$this->error[] = 'Username already exists.';
+				}
+			} else {
+				$this->error[] = 'Passwords don\'t match.';
+			}
+		//Empty fields
+		} elseif (empty($_POST['userName'])) {
+			$this->error[] = 'Username field was empty.';
+		} elseif (empty($_POST['password'])) {
+			$this->error[] = 'Password field was empty.';
+		} elseif (empty($_POST['passwordConfirm'])) {
+			$this->error[] = 'You need to confirm the password.';
+		} elseif (empty($_POST['email'])) {
+			$this->error[] = 'Email field was empty.';
+		} elseif (empty($_POST['lastName'])) {
+			$this->error[] = 'Last Name field was empty.';
+		} elseif (empty($_POST['firstName'])) {
+			$this->error[] = 'First Name field was empty.';
+		}
+	}
+
+    /**
+     *  Check if userName and password match
      *  @returns object with userid on success, null on fail
      */
     private function verify_password() {
         $query = $this->db->prepare('SELECT id FROM users
-            WHERE username = :username AND password = :password');
-        $query->bindParam(':username', $this->username);
-        $query->bindParam(':password', md5($this->password));
+            WHERE userName = :userName AND password = :password');
+        $query->bindParam(':userName', $this->userName);
+        $query->bindParam(':password', $this->password);
 
         $query->execute();
         return $query->fetch(PDO::FETCH_OBJ);
@@ -197,7 +251,7 @@ class User {
         session_unset();
         session_destroy();
         $this->is_logged = false;
-        setcookie('username', '', time()-3600);
+        setcookie('userName', '', time()-3600);
     }
 
     /**
@@ -213,6 +267,23 @@ class User {
 
         //Set the fields in $this to the resulting db result
         foreach($result as $k => $v) $this->$k = $v;
+    }
+
+    /**
+     *  set the lastLogindate as right now
+     *
+     *  Sets this properties to the results of the values in the db  
+     */
+    public function addLoginLog() {
+        $query = $this->db->prepare('UPDATE users SET lastLogin = :lastLogin
+            WHERE id = :id');
+        $query->bindParam(':lastLogin', $lastLogin);
+        $query->bindParam(':id', $id);
+        $lastLogin = date("Y-m-d H:i:s");
+        $id = $this->id;
+        if (!$query->execute()) {
+			$this->error[] = 'There was a problem setting the last login.';
+        }
     }
 
     /** 

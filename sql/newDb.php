@@ -3,13 +3,13 @@
 
   $stm = "CREATE TABLE users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username varchar(255) UNIQUE NOT NULL,
-    password char(32),
+    userName varchar(255) UNIQUE NOT NULL,
+    password char(32) NOT NULL,
     email varchar(255),
     firstName varchar(255),
     lastName varchar(255),
-    created INTEGER,
-    lastLogin INTEGER
+    created varchar(19),
+    lastLogin varchar(19)
     );
   ";
 

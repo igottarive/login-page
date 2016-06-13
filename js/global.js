@@ -4,8 +4,8 @@
  */
 $(function() {
   $('.login').on('click', function() {
-    var url = "template/login.html";
-    if ($(this).hasClass('register')) url = "template/register.html";
+    var url = "template/loginForm.html";
+    if ($(this).hasClass('register')) url = "template/registerForm.html";
     $('#popup').not('.open').load(url).addClass('open');
     return false;
   });

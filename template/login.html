@@ -1,10 +1,13 @@
-<div class="user_form">
-<h1>Login</h1>
-<form id="login" method="POST" action="/login.php">
-	<input class="name" type="text" id="username" name="username" placeholder="Username" />
-	<input type="password" id="password" name="password" placeholder="Password" />
-	<input type="checkbox" id="remember" name="remember" />
-	<label for="remember">Remember password?</label>
-	<input class="btn" type="submit" name="login" value="Login">
-</form>
-</div>
+<!DOCTYPE HTML>
+<html>
+  <?php require 'template/head.html'; ?>
+<body>
+  <div id="main">
+    <div id="site_content" class="login_page">
+      <?php require 'includes/header.php'; ?>
+    </div>
+    <?php require 'template/footer.html'; ?>
+  </div>
+  <div id="popup"></div>
+</body>
+</html>
